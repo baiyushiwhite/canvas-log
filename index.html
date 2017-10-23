@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
+    <title>canvas粒子logo</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style type="text/css">
+        body {
+            background-color: #000;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+
+</head>
+<body>
+<canvas id="myCanvas">您的浏览器不支持Canvas。</canvas>
+<!--<script type="text/javascript">
+    (function () {
+        var canvas = {},
+            image = {};
+        var particles = [];
+        var count = 0;
+        //获取canvas元素
+        canvas.obj = document.getElementById('myCanvas');
+
+        if (canvas.obj.getContext) {
+
+            //获取渲染上下文
+            canvas.ctx = canvas.obj.getContext('2d');
+
+            //设置画布大小为屏幕宽高
+            canvas.w = canvas.obj.width = document.body.clientWidth;
+            canvas.h = canvas.obj.height = document.body.clientHeight;
+
+            //新建一个image对象
+            var img = new Image();
+
+            //图像加载完后
+            img.onload = function () {
+                //把图像信息保存在image里面
+                image.obj = img;
+                image.w = img.width;
+                image.h = img.height;
+                image.x = parseInt(canvas.w / 2 - image.w / 2);
+                image.y = canvas.h - image.h - 20;
+
+                //把图像绘制到画布坐标为(100,100)的地方
+                canvas.ctx.drawImage(image.obj, image.x, image.y, image.w, image.h);
+
+                image.imageData = canvas.ctx.getImageData(image.x, image.y, image.w, image.h);
+
+                //计算出符合要求的像素
+                calculate();
+
+                //计算后绘到画布上
+                draw();
+            };
+
+            //设置image的source
+            img.src = 'http://y.gtimg.cn/mediastyle/musicprotal/extra/logo.png';
+        }
+
+
+        //计算并保存坐标
+        function calculate() {
+            var len = image.imageData.length;
+            //只保存100行，100列的像素值
+            var cols = 150,
+                rows = 150;
+            var s_width = parseInt(image.w / cols),
+                s_height = parseInt(image.h / rows);
+            var pos = 0; //数组中的位置
+            var par_x, par_y;  //粒子的x,y坐标
+            var data = image.imageData.data;  //像素值数组
+            for (var i = 0; i < cols; i++) {
+                for (var j = 0; j < rows; j++) {
+                    //计算(i,j)在数组中的R的坐标值
+                    pos = (j * s_height * image.w + i * s_width) * 4;
+                    //判断像素透明度值是否符合要求
+
+                    if (data[pos] < 255 || data[pos + 1] < 255 || data[pos + 2] < 255) {
+                        var particle = {
+                            //x,y值都随机一下
+                            x: image.x + i * s_width + (Math.random() - 0.5) * 10,
+                            y: image.y + j * s_height + (Math.random() - 0.5) * 10,
+                            initX: 0.5 * canvas.w,
+                            initY: canvas.h
+                        };
+                        particle.curX = particle.initX;
+                        particle.curY = particle.initY;
+
+                        // 根据图像不同的色值来设定粒子色值
+                        if (data[pos] < 50) {
+                            particle.fillStyle = '#14d005';
+                        }
+                        else {
+                            particle.fillStyle = '#fecd0e';
+                        }
+                        //符合要求的粒子保存到数组里
+                        particles.push(particle);
+                    }
+                }
+            }
+        }
+
+        //绘图案
+        function draw() {
+            //清空画布
+            canvas.ctx.clearRect(0, 0, canvas.w, canvas.h);
+
+            var len = particles.length;
+            var curr_particle = null;
+
+            for (var i = 0; i < len; i++) {
+                curr_particle = particles[i];
+                curr_particle.curX += (curr_particle.x - curr_particle.initX) / 50;
+                curr_particle.curY -= Math.abs(curr_particle.y - curr_particle.initY) / 50;
+
+
+                //设置填充颜色
+                canvas.ctx.fillStyle = curr_particle.fillStyle;
+                //绘粒子到画布上
+                canvas.ctx.fillRect(curr_particle.curX, curr_particle.curY, 1, 1);
+            }
+
+            if (count < 800) {
+                count++;
+                setTimeout(function () {
+                    draw();
+                }, 1);
+            }
+        }
+
+    }())
+
+</script>-->
+
+<script type="text/javascript">
+    (function () {
+        var canvas = {},
+            image = {};
+        var particles = [];
+        var count = 0;
+        var maxCount = 300;
+        //获取canvas元素
+        canvas.obj = document.getElementById('myCanvas');
+
+        if (canvas.obj.getContext) {
+
+            //获取渲染上下文
+            canvas.ctx = canvas.obj.getContext('2d');
+
+            //设置画布大小为屏幕宽高
+            canvas.w = canvas.obj.width = document.body.clientWidth;
+            canvas.h = canvas.obj.height = document.body.clientHeight;
+
+            //新建一个image对象
+            var img = new Image();
+
+            //图像加载完后
+            img.onload = function () {
+                //把图像信息保存在image里面
+                image.obj = img;
+                image.w = img.width;
+                image.h = img.height;
+                image.x = parseInt(canvas.w / 2 - image.w / 2);
+                image.y = parseInt(canvas.h / 2 - image.h / 2);;
+
+                //把图像绘制到画布坐标为(100,100)的地方
+                canvas.ctx.drawImage(image.obj, image.x, image.y, image.w, image.h);
+
+                image.imageData = canvas.ctx.getImageData(image.x, image.y, image.w, image.h);
+
+                //计算出符合要求的像素
+                calculate();
+
+                //计算后绘到画布上
+                draw();
+            };
+
+            //设置image的source
+            img.src = 'http://y.gtimg.cn/mediastyle/musicprotal/extra/logo.png';
+        }
+
+
+        //计算并保存坐标
+        function calculate() {
+            var len = image.imageData.length;
+            //只保存100行，100列的像素值
+            var cols = 150,
+                rows = 150;
+            var s_width = parseInt(image.w / cols),
+                s_height = parseInt(image.h / rows);
+            var pos = 0; //数组中的位置
+            var par_x, par_y;  //粒子的x,y坐标
+            var data = image.imageData.data;  //像素值数组
+            for (var i = 0; i < cols; i++) {
+                for (var j = 0; j < rows; j++) {
+                    //计算(i,j)在数组中的R的坐标值
+                    pos = (j * s_height * image.w + i * s_width) * 4;
+                    //判断像素透明度值是否符合要求
+
+                    if (data[pos] < 255 || data[pos + 1] < 255 || data[pos + 2] < 255) {
+                        var particle = {
+                            //x,y值都随机一下
+                            x: image.x + i * s_width + (Math.random() - 0.5) * 10,
+                            y: image.y + j * s_height + (Math.random() - 0.5) * 10,
+                            initX: (Math.random() - 0.5) * 5 * canvas.w + 0.5 * canvas.w,
+                            initY: (Math.random() - 0.5) * 5 * canvas.h + 0.5 * canvas.h
+                        };
+                        particle.curX = particle.initX;
+                        particle.curY = particle.initY;
+
+                        // 根据图像不同的色值来设定粒子色值
+                        if (data[pos] < 50) {
+                            particle.fillStyle = '#14d005';
+                        }
+                        else {
+                            particle.fillStyle = '#fecd0e';
+                        }
+                        //符合要求的粒子保存到数组里
+                        particles.push(particle);
+                    }
+                }
+            }
+        }
+
+        //绘图案
+        function draw() {
+            //清空画布
+            canvas.ctx.clearRect(0, 0, canvas.w, canvas.h);
+
+            var len = particles.length;
+            var curr_particle = null;
+
+            for (var i = 0; i < len; i++) {
+                curr_particle = particles[i];
+                var newX = curr_particle.curX + (curr_particle.x - curr_particle.initX) / maxCount;
+                if (Math.abs(newX - curr_particle.x) < Math.abs(curr_particle.curX - curr_particle.x)) {
+                    curr_particle.curX = newX;
+                }
+
+                var newY = curr_particle.curY + (curr_particle.y - curr_particle.initY) / maxCount;
+                if (Math.abs(newY - curr_particle.y) < Math.abs(curr_particle.curY - curr_particle.y)) {
+                    curr_particle.curY = newY;
+                }
+
+                //设置填充颜色
+                canvas.ctx.fillStyle = curr_particle.fillStyle;
+                //绘粒子到画布上
+                canvas.ctx.fillRect(curr_particle.curX, curr_particle.curY, 1, 1);
+            }
+
+            if (count < maxCount) {
+                count++;
+                setTimeout(function () {
+                    draw();
+                }, 1);
+            }
+        }
+
+    }())
+
+</script>
+</body>
+</html>
+
